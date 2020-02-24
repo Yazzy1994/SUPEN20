@@ -1,0 +1,6 @@
+{
+    "ConnectionStrings": {
+      "DatabaseConnection": "Server=(localdb)\\MSSQLLocalDB;Database=CreateOrderDB;Integrated Security=true;MultipleActiveResultSets=true;"
+    }
+}
+
