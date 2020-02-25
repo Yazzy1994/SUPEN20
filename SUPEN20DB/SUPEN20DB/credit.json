@@ -1,0 +1,15 @@
+[
+  {
+    "CreditId": 0,
+    "Amount": 200.00,
+    "CustomderId": 1,
+    "DateTime": "05/29/2015"
+  },
+
+  {
+    "CreditId": 0,
+    "Amount": 200.00,
+    "CustomderId": 1,
+    "DateTime": "05/29/2015"
+  }
+]

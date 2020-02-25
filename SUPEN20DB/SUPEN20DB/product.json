@@ -1,0 +1,24 @@
+[
+  {
+    "ProductId": 0,
+    "Title": "Grey Hoodie",
+    "Description": "A grey hoodie",
+    "Price": 300.00,
+    "ImgId": "hoodie"
+  },
+
+  {
+    "ProductId": 0,
+    "Title": "Blue Super Hoodie",
+    "Description": "A rare blue hoodie",
+    "Price": 500.00,
+    "ImgId": "hoodie"
+  },
+  {
+    "ProductId": 0,
+    "Title": "Unicorn Hoodie",
+    "Description": "A limited edition unicorn hoodie",
+    "Price": 1000.00,
+    "ImgId": "hoodie"
+  }
+]
