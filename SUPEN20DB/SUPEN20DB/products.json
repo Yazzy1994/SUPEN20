@@ -1,0 +1,24 @@
+[
+  {
+    "ProductId": "37B79B21-0D2E-4719-B3B9-77D2B9EA1774",
+    "Title": "Grey Hoodie",
+    "Description": "A grey hoodie",
+    "Price": 300,
+    "ImgId": ""
+  },
+
+  {
+    "ProductId": 0,
+    "Title": "Blue Super Hoodie",
+    "Description": "A rare blue hoodie",
+    "Price": 500,
+    "ImgId": ""
+  },
+
+  {
+    "Title": "Unicorn Hoodie",
+    "Description": "A limited edition unicorn hoodie",
+    "Price": 1000,
+    "ImgId": ""
+  }
+]

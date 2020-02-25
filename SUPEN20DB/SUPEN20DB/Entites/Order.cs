@@ -13,6 +13,7 @@ namespace SUPEN20DB.Entites
         public int ProductQuantity { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastModified { get; set; }
+        public int CustomerId { get; set; }
 
     }
 }

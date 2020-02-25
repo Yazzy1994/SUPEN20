@@ -10,7 +10,7 @@ using SUPEN20DB.DbContexts;
 namespace SUPEN20DB.Migrations
 {
     [DbContext(typeof(SUPEN20DbContext))]
-    [Migration("20200224102740_Initial")]
+    [Migration("20200225095007_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,9 @@ namespace SUPEN20DB.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");

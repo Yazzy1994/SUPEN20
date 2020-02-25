@@ -46,7 +46,8 @@ namespace SUPEN20DB.Migrations
                     ProductId = table.Column<Guid>(nullable: true),
                     ProductQuantity = table.Column<int>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    LastModified = table.Column<DateTime>(nullable: false)
+                    LastModified = table.Column<DateTime>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
