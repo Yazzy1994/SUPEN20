@@ -65,10 +65,7 @@ namespace SystemAPI.Controllers
             {
                 Console.WriteLine(ex);
             }
-
-
-
-
+            
             return NoContent(); 
         }
 
