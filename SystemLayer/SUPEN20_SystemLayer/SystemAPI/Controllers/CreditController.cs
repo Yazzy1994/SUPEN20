@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +53,7 @@ namespace SystemAPI.Controllers
         // PUT: api/Credit/5
         // Updates the specified credit with it's new values.
         [HttpPut("{id}")]
+        // Q: Räcker den valideringen jag har? Metoden tar in en guid och ett credit-objekt och det borde inte kunna skickas in om det inte är rätt typ så det enda jag behöver kolla är om id:na stämmer överens med varandra och om det gick att spara datan i databasen. Kanske validera (en try catch) för att se om mappningen gick bra? Men det kanske är onödigt?
         public async Task<ActionResult<Credit>> UpdateCredit(Guid id, Credit creditDto)
         {
             // Check if the Id entered is the same Id as the object that has been sent
@@ -86,14 +88,21 @@ namespace SystemAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> CreateCredit(Credit creditDto)
         {
-           // Maps the incomming DTO-object to an Entity-object.
-           var credit = _mapper.Map<Credit>(creditDto);
+            try
+            {
+                // Maps the incomming DTO-object to an Entity-object.
+                var credit = _mapper.Map<Credit>(creditDto);
 
-            _context.Credits.Add(credit);
-            await _context.SaveChangesAsync();
+                _context.Credits.Add(credit);
+                await _context.SaveChangesAsync();
+                // Sends back result in the shape of an DTO.
+                return CreatedAtAction("GetCredit", new { id = credit.CustomerId }, _mapper.Map<CreditDTO>(credit));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
 
-            // Sends back result in the shape of an DTO.
-            return CreatedAtAction("GetCredit", new { id = credit.CustomerId }, _mapper.Map<CreditDTO>(credit));
         }
 
         // DELETE: api/Credit/5 
