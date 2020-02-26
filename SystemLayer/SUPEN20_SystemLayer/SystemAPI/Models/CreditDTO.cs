@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-
-namespace SUPEN20DB.Entites
+namespace SystemAPI.Models
 {
-    public class Credit
+    public class CreditDTO
     {
         public Guid CreditId { get; set; }
         public decimal Amount { get; set; }
         public int CustomerId { get; set; }
-        public DateTime LastModified { get; set; } = DateTime.Now;
-
     }
 }

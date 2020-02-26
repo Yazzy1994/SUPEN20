@@ -11,37 +11,37 @@ namespace SystemAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly SUPEN20DbContext _context;
 
-        public ProductsController(SUPEN20DbContext context)
+        public ProductController(SUPEN20DbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products 
+        // GET: api/Product
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await _context.Products.ToListAsync();
         }
 
-        // GET: api/Products/5 
+        // GET: api/Product/5 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(Guid id)
         {
-            var user = await _context.Products.FindAsync(id);
-            if (user == null)
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            return user;
+            return product;
         }
 
-        // PUT: api/Products/5 
+        // PUT: api/Product/5 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(Guid id, Product product)
+        public async Task<IActionResult> UpdateProduct(Guid id, Product product)
         {
             if (!(id.ToString().Equals(product.ProductId.ToString())))
             {
@@ -66,7 +66,7 @@ namespace SystemAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products 
+        // POST: api/Product 
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
@@ -75,7 +75,7 @@ namespace SystemAPI.Controllers
             return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
         }
 
-        // DELETE: api/Products/5 
+        // DELETE: api/Product/5 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(Guid id)
         {
