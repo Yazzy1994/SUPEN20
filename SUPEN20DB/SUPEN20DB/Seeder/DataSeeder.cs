@@ -15,8 +15,10 @@ namespace SUPEN20DB.Seeder
             {
                 var products = new List<Product>()
                 {
-                    new Product { /*Id = 1,*/ Title = "Grey Hoodie", Description = "A grey hoodie", Price = 200},
-                    new Product { /*Id = 2,*/ Title = "Blue Hoodie", Description = "A blue hoodie", Price = 400}
+                    new Product { /*Id = 1,*/ Title = "It's Funny Because It's True", Description = "A grey T-shirt made of ecologically sustainable wool. Slim fit.", Price = 200, ImgId = "Its_Funny_Because_Its_True"},
+                    new Product { /*Id = 2,*/ Title = "Think Outside The Box", Description = "A white T-shirt with beautiful print made of ecologically sustainable wool. Slim fit.", Price = 400, ImgId = "Think_outside_the_box"},
+                    new Product { /*Id = 1,*/ Title = "Change The World", Description = "UnicornsCanCode's original T-shirt. Made of ecologically sustainable wool. Slim fit.", Price = 300, ImgId = "Change_The_World"},
+                    new Product { /*Id = 2,*/ Title = "My Code Works", Description = "A grey T-shirt made of ecologically sustainable wool. Slim fit.", Price = 300, ImgId = "My_Code_Works"}
                 };
                 context.Products.AddRange(products);
                 context.SaveChanges();
@@ -26,7 +28,8 @@ namespace SUPEN20DB.Seeder
             {
                 var credits = new List<Credit>()
                 {
-                    new Credit { /* Id = 1 */ Amount = 20000, CustomerId = 1, LastModified = DateTime.Now }
+                    new Credit { /* Id = 1 */ Amount = 20000, CustomerId = 1, LastModified = DateTime.Now },
+                    new Credit { /* Id = 1 */ Amount = 50000, CustomerId = 2, LastModified = DateTime.Now }
                 };
                 context.Credits.AddRange(credits);
                 context.SaveChanges();
