@@ -12,7 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SUPEN20DB.DbContexts;
+using SUPEN20DB.Entites;
 using SUPEN20DB.Seeders;
+using SystemAPI.Services;
 
 namespace SystemAPI
 {
@@ -35,9 +37,18 @@ namespace SystemAPI
             });
          
             services.AddTransient<Seeder>();
-            
-     
+            services.AddScoped(typeof(IRespository<>), typeof(SUPEN20Respository<>)); 
             services.AddControllers();
+            services.AddSwaggerGen(setupAction => // This is the middleware.Here are we calling the SwaggerGenerator and this accept a setupAction to set it up.
+            {
+                setupAction.SwaggerDoc( //This add a OpenAPI Specification.
+                    "Supen20OpenAPISpecification", 
+                    new Microsoft.OpenApi.Models.OpenApiInfo() { 
+                            Title= "System API",
+                            Version = "1"
+                    });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,9 +63,19 @@ namespace SystemAPI
 
             app.UseRouting();
 
+            app.UseSwagger(); //This is the Swashbuckle request pipeline. 
+
+            app.UseSwaggerUI(setupAction => //This is the swaggerUI middleware to the request pipeline. 
+            {
+                setupAction.SwaggerEndpoint( //This is the endpoint where SwaggerUI can find the OpenAPI specification generetad by SwaggerGen. 
+                 "/swagger/Supen20OpenAPISpecification/swagger.json",
+                    "System API");
+                
+            });
+
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints => 
             {
                 endpoints.MapControllers();
             });
