@@ -14,6 +14,12 @@ namespace SUPEN20DB.Entites
         public DateTime Created { get; set; }
         public DateTime LastModified { get; set; }
         public int CustomerId { get; set; }
-
+        public string OrderStatus { get; set; } = Status.Pending.ToString();
+    }
+    public enum Status
+    {
+        Pending,
+        Approved,
+        Denied
     }
 }

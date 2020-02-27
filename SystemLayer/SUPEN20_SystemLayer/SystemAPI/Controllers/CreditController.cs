@@ -46,8 +46,10 @@ namespace SystemAPI.Controllers
             if (credit == null)
             {
                 return NotFound();
+            }else
+            {
+                return Ok(_mapper.Map<CreditDTO>(credit));
             }
-            return Ok(_mapper.Map<CreditDTO>(credit));
         }
 
         // PUT: api/Credit/5
@@ -114,9 +116,16 @@ namespace SystemAPI.Controllers
             {
                 return NotFound();
             }
-            _context.Credits.Remove(credit);
-            await _context.SaveChangesAsync();
-            return credit;
+            try
+            {
+                _context.Credits.Remove(credit);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+            return Ok();
         }
 
         private bool CreditExist(Guid id)
