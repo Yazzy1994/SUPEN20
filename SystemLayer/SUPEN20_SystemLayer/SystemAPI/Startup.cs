@@ -1,20 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using SUPEN20DB.DbContexts;
-using SUPEN20DB.Entites;
 using SUPEN20DB.Seeders;
 using SystemAPI.Services;
+using AutoMapper;
+using System;
+using SUPEN20DB.Entites;
+using Newtonsoft;
 
 namespace SystemAPI
 {
@@ -30,6 +27,7 @@ namespace SystemAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //AddAutoMapper is define in AutoMapper. This method allows me to input a set of assemblies. It is these assemblies that will automatically get scanned for profiles that contain mapping configurations.  
 
             services.AddDbContext<SUPEN20DbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection"));
@@ -37,8 +35,12 @@ namespace SystemAPI
             });
          
             services.AddTransient<Seeder>();
-            services.AddScoped(typeof(IRespository<>), typeof(SUPEN20Respository<>)); 
-            services.AddControllers();
+            services.AddScoped(typeof(IRespository<Order>), typeof(OrderRespository)); //Able to use the respository interface, We need to configure dependency injection.This Scoped service takes our interface and our implementation with DbContext
+
+            services.AddControllers()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+                
             services.AddSwaggerGen(setupAction => // This is the middleware.Here are we calling the SwaggerGenerator and this accept a setupAction to set it up.
             {
                 setupAction.SwaggerDoc( //This add a OpenAPI Specification.
@@ -57,6 +59,17 @@ namespace SystemAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            } 
+            else
+            { //This returns a generic message to the consumer when a 500 fault happens. This only works when the enviroment in ASP.NET Core is set to Production. 
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async contex =>
+                    {
+                        contex.Response.StatusCode = 500;
+                        await contex.Response.WriteAsync("An unexpected fault happened. Try again later!");
+                    });
+                }); 
             }
 
             app.UseHttpsRedirection();

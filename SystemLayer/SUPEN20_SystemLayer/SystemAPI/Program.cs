@@ -17,7 +17,7 @@ namespace SystemAPI
         {
            var host = CreateHostBuilder(args).Build(); 
            using (var scope = host.Services.CreateScope())
-            {
+           {
                 var services = scope.ServiceProvider;
                 try
                 {
@@ -28,7 +28,7 @@ namespace SystemAPI
                 {
                     Console.WriteLine(ex); 
                 }
-            }
+           }
             
 
                 

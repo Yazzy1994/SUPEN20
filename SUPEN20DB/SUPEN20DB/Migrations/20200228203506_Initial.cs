@@ -12,7 +12,7 @@ namespace SUPEN20DB.Migrations
                 columns: table => new
                 {
                     CreditId = table.Column<Guid>(nullable: false),
-                    Amount = table.Column<decimal>(nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
                     LastModified = table.Column<DateTime>(nullable: false)
                 },
@@ -22,13 +22,29 @@ namespace SUPEN20DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<Guid>(nullable: false),
+                    OrderNumber = table.Column<int>(nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    OrderStatus = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     ImgId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -37,22 +53,25 @@ namespace SUPEN20DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "OrderItems",
                 columns: table => new
                 {
-                    OrderId = table.Column<Guid>(nullable: false),
-                    OrderNumber = table.Column<int>(nullable: false),
-                    Total = table.Column<decimal>(nullable: false),
+                    OrderItemId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: true),
-                    ProductQuantity = table.Column<int>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastModified = table.Column<DateTime>(nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    OrderId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.PrimaryKey("PK_OrderItems", x => x.OrderItemId);
                     table.ForeignKey(
-                        name: "FK_Orders_Products_ProductId",
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
@@ -60,8 +79,13 @@ namespace SUPEN20DB.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ProductId",
-                table: "Orders",
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_ProductId",
+                table: "OrderItems",
                 column: "ProductId");
         }
 
@@ -69,6 +93,9 @@ namespace SUPEN20DB.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Credits");
+
+            migrationBuilder.DropTable(
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "Orders");

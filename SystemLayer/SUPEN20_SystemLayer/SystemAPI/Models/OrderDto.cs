@@ -1,15 +1,18 @@
-﻿using System;
+﻿using SUPEN20DB.Entites;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SystemAPI.Models;
 
 namespace SystemAPI.Profiles
 {
     public class OrderDto
     {
-        public int OrderNumnber { get; set; }
-        public decimal Total { get; set; }
-        public Guid ProductId { get; set; }
-        public int Quantaty { get; set; }
+        public Guid OrderId {get; set; }
+        public int OrderNumber { get; set; }
+        public ICollection<OrderItemDto> OrderItems { get; set; } = new List<OrderItemDto>();
+        public OrderStatus OrderStatus { get; set; }
+        public DateTime Created { get; set; }
     }
 }

@@ -36,23 +36,30 @@ namespace SUPEN20DB.Seeders
                   new Product {ProductId = Guid.Parse("2aadd2df-7caf-45ab-9355-7f6332985a87"),  Title = "Unicorn Hoodie",Description = "A limited edition unicorn",Price = 500,  ImgId = "hoodie" }
 
                 };
-
                 _context.Products.AddRange(products);
+               
                 _context.SaveChanges(); 
             }
 
             if (!_context.Orders.Any())
             {
 
-                var orders = new List<Order>() { 
-                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 123, Total= 300, ProductId = Guid.Parse("102b566b-ba1f-404c-b2df-e2cde39ade09"),Created = DateTime.UtcNow, LastModified= DateTime.UtcNow},
-                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 456,ProductId = Guid.Parse("5b3621c0-7b12-4e80-9c8b-3398cba7ee05"), Created = DateTime.UtcNow, LastModified= DateTime.UtcNow},
-                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 789, ProductId = Guid.Parse("2aadd2df-7caf-45ab-9355-7f6332985a87"),Created = DateTime.UtcNow, LastModified= DateTime.UtcNow}
+                var orders = new List<Order>() {
+                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 123,Created = DateTime.UtcNow, LastModified= DateTime.UtcNow},
+                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 456, Created = DateTime.UtcNow, LastModified= DateTime.UtcNow},
+                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 789, Created = DateTime.UtcNow, LastModified= DateTime.UtcNow},
+                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 100,Created = DateTime.UtcNow, LastModified= DateTime.UtcNow}
                 };
+              
                 _context.Orders.AddRange(orders);
+
                 _context.SaveChanges();
 
             }
+
+          
+
+            
 
             if (!_context.Credits.Any())
             {
@@ -60,6 +67,7 @@ namespace SUPEN20DB.Seeders
                 var credits = new List<Credit>()
                {
                    new Credit {CreditId = Guid.NewGuid(), Amount = 1000, CustomerId= 1, LastModified= DateTime.UtcNow },
+                   new Credit {CreditId = Guid.NewGuid(), Amount = 500, CustomerId= 1, LastModified= DateTime.UtcNow },
                    new Credit {CreditId = Guid.NewGuid(), Amount = 500, CustomerId= 1, LastModified= DateTime.UtcNow },
                    new Credit {CreditId = Guid.NewGuid(), Amount = 500, CustomerId= 1, LastModified= DateTime.UtcNow }
 

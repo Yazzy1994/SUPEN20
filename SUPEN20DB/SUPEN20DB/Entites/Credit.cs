@@ -11,7 +11,7 @@ namespace SUPEN20DB.Entites
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Amount { get; set; }
         public int CustomerId { get; set; }
-        public DateTime LastModified { get; set; }
+        public DateTime LastModified { get; set; } 
 
     }
 }
