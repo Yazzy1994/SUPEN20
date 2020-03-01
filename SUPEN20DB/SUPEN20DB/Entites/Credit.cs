@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
+
 namespace SUPEN20DB.Entites
 {
     public class Credit
@@ -11,7 +12,8 @@ namespace SUPEN20DB.Entites
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Amount { get; set; }
         public int CustomerId { get; set; }
-        public DateTime LastModified { get; set; } 
+        public DateTime LastModified { get; set; } = DateTime.Now;
+
 
     }
 }

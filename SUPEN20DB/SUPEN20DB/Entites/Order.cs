@@ -12,7 +12,7 @@ namespace SUPEN20DB.Entites
         Denied
     }
 
-    public class Order 
+    public class Order
     {
         public DateTime Created { get; set; } = DateTime.UtcNow;
         public DateTime LastModified { get; set; } = DateTime.UtcNow;
@@ -21,8 +21,10 @@ namespace SUPEN20DB.Entites
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid OrderId { get; set; }
 
+
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public int OrderNumber { get; set; }
         public OrderStatus OrderStatus { get; set; }
     }
+
 }

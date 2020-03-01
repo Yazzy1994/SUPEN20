@@ -11,9 +11,10 @@ namespace SUPEN20DB.DbContexts
         public SUPEN20DbContext(DbContextOptions<SUPEN20DbContext> options) : base(options) 
         { }
 
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Credit> Credits { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual  DbSet<OrderItem> OrderItems { get; set; }
+        public virtual DbSet<Credit> Credits { get; set; }
    }
+
 }
