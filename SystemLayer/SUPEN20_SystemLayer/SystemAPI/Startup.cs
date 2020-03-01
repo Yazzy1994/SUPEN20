@@ -1,34 +1,18 @@
-<<<<<<< HEAD
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-=======
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
->>>>>>> origin/dev_alicia
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-<<<<<<< HEAD
 using SUPEN20DB.DbContexts;
-using SUPEN20DB.Seeders;
 using SystemAPI.Services;
-using AutoMapper;
-using System;
 using SUPEN20DB.Entites;
-using Newtonsoft;
-=======
-using Microsoft.Extensions.Logging;
-using SUPEN20DB.DbContexts;
->>>>>>> origin/dev_alicia
+using SUPEN20DB.Seeder;
 
 namespace SystemAPI
 {
@@ -44,7 +28,7 @@ namespace SystemAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-<<<<<<< HEAD
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //AddAutoMapper is define in AutoMapper. This method allows me to input a set of assemblies. It is these assemblies that will automatically get scanned for profiles that contain mapping configurations.  
 
             services.AddDbContext<SUPEN20DbContext>(options => {
@@ -52,7 +36,7 @@ namespace SystemAPI
             
             });
          
-            services.AddTransient<Seeder>();
+            services.AddTransient<DataSeeder>();
             services.AddScoped(typeof(IRespository<Order>), typeof(OrderRespository)); //Able to use the respository interface, We need to configure dependency injection.This Scoped service takes our interface and our implementation with DbContext
 
             services.AddControllers()
@@ -69,14 +53,12 @@ namespace SystemAPI
                     });
             });
 
-=======
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddDbContext<SUPEN20DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+            //services.AddDbContext<SUPEN20DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
->>>>>>> origin/dev_alicia
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

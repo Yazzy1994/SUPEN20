@@ -10,12 +10,8 @@ using SUPEN20DB.DbContexts;
 namespace SUPEN20DB.Migrations
 {
     [DbContext(typeof(SUPEN20DbContext))]
-<<<<<<< HEAD:SUPEN20DB/SUPEN20DB/Migrations/20200228203506_Initial.Designer.cs
-    [Migration("20200228203506_Initial")]
-=======
-    [Migration("20200225095007_Initial")]
->>>>>>> origin/dev_alicia:SUPEN20DB/SUPEN20DB/Migrations/20200225095007_Initial.Designer.cs
-    partial class Initial
+    [Migration("20200301112112_Initial02")]
+    partial class Initial02
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,9 +50,6 @@ namespace SUPEN20DB.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
@@ -65,9 +58,6 @@ namespace SUPEN20DB.Migrations
 
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("OrderId");
 
@@ -88,6 +78,9 @@ namespace SUPEN20DB.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("OrderItemId");
 
