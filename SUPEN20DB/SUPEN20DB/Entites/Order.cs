@@ -21,10 +21,8 @@ namespace SUPEN20DB.Entites
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid OrderId { get; set; }
 
-
-        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public int OrderNumber { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
         public OrderStatus OrderStatus { get; set; }
     }
-
 }

@@ -5,8 +5,16 @@
     <UserSecretsId>aspnet-MVCWebApp-E94E165C-72ED-4DE2-8AC6-C79A92C3E7DC</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\font-awesome\**" />
+    <Content Remove="wwwroot\lib\font-awesome\**" />
+    <EmbeddedResource Remove="wwwroot\lib\font-awesome\**" />
+    <None Remove="wwwroot\lib\font-awesome\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome.MVC" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
