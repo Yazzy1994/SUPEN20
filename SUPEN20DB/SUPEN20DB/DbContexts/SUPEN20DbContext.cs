@@ -13,6 +13,8 @@ namespace SUPEN20DB.DbContexts
 
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual  DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Credit> Credits { get; set; }
-    }
+   }
+
 }

@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SUPEN20DB.Entites
 {
-    public class Order
-    {
-        public Guid OrderId { get; set; }
-        public int OrderNumber {get; set;}
-        public decimal Total { get; set; }
-        public Product Product { get; set; }
-        public int ProductQuantity { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime LastModified { get; set; }
-        public int CustomerId { get; set; }
-        public string OrderStatus { get; set; } = Status.Pending.ToString();
-    }
-    public enum Status
+    public enum OrderStatus
     {
         Pending,
         Approved,
         Denied
+    }
+
+    public class Order
+    {
+        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime LastModified { get; set; } = DateTime.UtcNow;
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid OrderId { get; set; }
+
+        public int OrderNumber { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
 }

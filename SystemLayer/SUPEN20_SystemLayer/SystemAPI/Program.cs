@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using SUPEN20DB.DbContexts;
 using SUPEN20DB.Seeder;
+using System;
 
 namespace SystemAPI
 {
@@ -23,6 +18,7 @@ namespace SystemAPI
                 try
                 {
                     var context = services.GetRequiredService<SUPEN20DbContext>();
+
                     DataSeeder.Initialize(context);
                 }
                 catch (Exception)
@@ -30,6 +26,7 @@ namespace SystemAPI
                     Console.WriteLine("An error occurred while seeding the database.");
                 }
             }
+
             host.Run();
         }
 

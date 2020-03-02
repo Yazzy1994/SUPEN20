@@ -11,6 +11,9 @@ namespace SUPEN20DB.Seeder
     {
         public static void Initialize(SUPEN20DbContext context)
         {
+
+            context.Database.EnsureCreated();
+
             if (!context.Products.Any())
             {
                 var products = new List<Product>()
@@ -34,15 +37,23 @@ namespace SUPEN20DB.Seeder
                 context.Credits.AddRange(credits);
                 context.SaveChanges();
             }
+
             if (!context.Orders.Any())
             {
-                var orders = new List<Order>()
-                {
-                    new Order { /* Id = 1 */ OrderNumber = 11111, Total = 20000, Product = context.Products.FirstOrDefault(), ProductQuantity = 100, Created = DateTime.Now, LastModified = DateTime.Now, CustomerId = 1}
+
+                var orders = new List<Order>() {
+                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 123,Created = DateTime.UtcNow, LastModified= DateTime.UtcNow},
+                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 456, Created = DateTime.UtcNow, LastModified= DateTime.UtcNow},
+                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 789, Created = DateTime.UtcNow, LastModified= DateTime.UtcNow},
+                    new Order {OrderId = Guid.NewGuid(), OrderNumber= 100,Created = DateTime.UtcNow, LastModified= DateTime.UtcNow}
                 };
+
                 context.Orders.AddRange(orders);
+
                 context.SaveChanges();
+
             }
+
         }
     }
 

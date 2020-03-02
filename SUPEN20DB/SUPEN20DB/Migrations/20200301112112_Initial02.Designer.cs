@@ -10,8 +10,8 @@ using SUPEN20DB.DbContexts;
 namespace SUPEN20DB.Migrations
 {
     [DbContext(typeof(SUPEN20DbContext))]
-    [Migration("20200225095007_Initial")]
-    partial class Initial
+    [Migration("20200301112112_Initial02")]
+    partial class Initial02
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace SUPEN20DB.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -50,29 +50,45 @@ namespace SUPEN20DB.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ProductQuantity")
+                    b.Property<int>("OrderStatus")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId");
 
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("SUPEN20DB.Entites.OrderItem", b =>
+                {
+                    b.Property<Guid>("OrderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("OrderItemId");
+
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("SUPEN20DB.Entites.Product", b =>
@@ -88,7 +104,7 @@ namespace SUPEN20DB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -98,8 +114,12 @@ namespace SUPEN20DB.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SUPEN20DB.Entites.Order", b =>
+            modelBuilder.Entity("SUPEN20DB.Entites.OrderItem", b =>
                 {
+                    b.HasOne("SUPEN20DB.Entites.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("SUPEN20DB.Entites.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
