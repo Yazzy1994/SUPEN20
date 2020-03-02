@@ -23,11 +23,25 @@ namespace MVCWebApp.Controllers
             return View();
         }
 
-
+        public IActionResult Cart()
+        {
+            return View();
+        }
 
         public IActionResult About()
         {
             return View();
+        }
+
+        //Ta bort senare, bara för design
+        public IActionResult Loading()
+        {
+            return View();
+        }
+
+        public IActionResult Checkout()
+        {
+            return PartialView("_LoadingPartial", "Shared");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
