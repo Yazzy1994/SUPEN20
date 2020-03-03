@@ -62,6 +62,15 @@ namespace MVCWebApp.Controllers
             return RedirectToAction("Cart");
         }
 
+        public IActionResult UpdateProductQuantity(Guid product, int quantity)
+        {
+            var p = CurrentCart.Products.Where(p => p.ProductId == product).FirstOrDefault();
+
+            p.Quantity = quantity;
+
+            return RedirectToAction("Cart");
+        }
+
         // Räknar ut det totala priset för alla varor i kundvagnen
         public decimal CartTotal(CartModel cart)
         {
