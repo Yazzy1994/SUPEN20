@@ -27,6 +27,14 @@
         */ 
     })
 
+    //  Ta bort en produkt-typ ur listan
+    $('#removeItem').click(function () {
+       /*  Det som ska göras:
+         *  - Kolla vilken produkt det gäller
+         *  - Anropa metod i controllern som tar bort produkten
+        */ 
+    })
+
 </script>
 
 <div class="container">
@@ -54,10 +62,10 @@
                 <th style="width:15%"></th>
             </tr>
         </thead>
-            <tbody>
-                <!-- List of products in the cart -->
-                @foreach (var p in Model.Products)
-                {
+        <tbody>
+            <!-- List of products in the cart -->
+            @foreach (var p in Model.Products)
+            {
                 <tr>
                     <td data-th="Product">
                         <div class="row">
@@ -71,13 +79,16 @@
                     <td data-th="Quantity">
                         <input type="number" class="form-control text-center" value="1" id="quantity">
                     </td>
+                    <!-- Ska också ta bort produkten ur listan.. -->
                     <td class="actions" data-th="">
-                        <button class="btn btn-light btn-sm"><i class="fa fa-trash-o"></i></button>
+                        <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("RemoveItemFromCart", "Cart", new { product = p.ProductId })+ "'");"><i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>
-                }
+            }
 
-            </tbody>
+            <!--onclick="("window.location.href='" + Url.Action("About", "Home") + "'");"-->
+
+        </tbody>
         <!-- Navigation buttons -->
             <tfoot>
                 <tr>
