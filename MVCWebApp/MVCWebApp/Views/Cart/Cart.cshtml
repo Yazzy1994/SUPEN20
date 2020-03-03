@@ -17,15 +17,23 @@
         */
     })
 
-    //  Det som sker när man ändrar quantity
-    $('#quantity').click(function () {
-       /*  Det som ska göras:
-         *  - Hämta det nya värdet i quantity
-         *  - Lägga till det nya antalet i rätt produkt i Kundvagnen
-         *  - Multiplicera priset på produkten med det nya antalet
-         *  - Ändra totala priset i kundvagnen
-        */ 
-    })
+ 
+    // Anropar metod i controllern som uppdaterar quantity i databasen
+    // EJ KLAR
+    function changeQuantity(p) {
+        var q = document.getElementById('quantity');
+
+        if (p != null && q != null) {
+            var url = '@("window.location.href='" + @Url.Action("UpdateProductQuantity", "Cart")+ "'");';
+
+            $.ajax({
+                url: url, 
+                data: { product: p, quantity: q }
+            })
+        
+        }
+       
+    }
 
 </script>
 
@@ -54,10 +62,10 @@
                 <th style="width:15%"></th>
             </tr>
         </thead>
-            <tbody>
-                <!-- List of products in the cart -->
-                @foreach (var p in Model.Products)
-                {
+        <tbody>
+            <!-- List of products in the cart -->
+            @foreach (var p in Model.Products)
+            {
                 <tr>
                     <td data-th="Product">
                         <div class="row">
@@ -69,15 +77,18 @@
                     </td>
                     <td data-th="Price">@p.Price</td>
                     <td data-th="Quantity">
-                        <input type="number" class="form-control text-center" value="1" id="quantity">
+                        <input type="number" class="form-control text-center" value="@p.Quantity" id="quantity" onclick="changeQuantity(@p.ProductId);">
                     </td>
+                    <!-- Ska också ta bort produkten ur listan.. -->
                     <td class="actions" data-th="">
-                        <button class="btn btn-light btn-sm"><i class="fa fa-trash-o"></i></button>
+                        <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("RemoveItemFromCart", "Cart", new { product = p.ProductId })+ "'");"><i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>
-                }
+            }
 
-            </tbody>
+            <!--onclick="("window.location.href='" + Url.Action("About", "Home") + "'");"-->
+
+        </tbody>
         <!-- Navigation buttons -->
             <tfoot>
                 <tr>
