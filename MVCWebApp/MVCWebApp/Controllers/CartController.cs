@@ -19,7 +19,7 @@ namespace MVCWebApp.Controllers
 
         public CartController()
         {
-            client.BaseAddress = new Uri("https://localhost:44305/api/");
+            client.BaseAddress = new Uri("http://localhost:51044/api/");
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 

@@ -14,5 +14,8 @@ namespace MVCWebApp.Models
         public decimal Price { get; set; }
 
         public string ImgId { get; set; }
+
+
+        
     }
 }
