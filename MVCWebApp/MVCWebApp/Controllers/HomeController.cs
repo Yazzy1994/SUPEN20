@@ -37,10 +37,16 @@ namespace MVCWebApp.Controllers
             return View();
         }
 
+        public ActionResult DisplayLoadning()
+        {
+            return PartialView(); 
+        }
+
         public IActionResult About()
         {
             return View();
         }
+
 
         //Ta bort senare, bara för design
         public IActionResult Loading()
