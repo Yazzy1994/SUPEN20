@@ -1,0 +1,112 @@
+﻿@model MVCWebApp.Models.CartModel
+@{
+    ViewData["Title"] = "Cart";
+
+}
+
+
+@*http://placehold.it/100x100*@
+
+<script>
+    // Anropa metoden som skickar iväg ordern
+    $('#checkout').click(function () {
+        /*  Det som ska göras:
+         *  - KundId ska kollas och sedan läggas till i kundvagnen
+         *  - Hela kundvagnen ska skickas med till den metod som sedan anropar APIn i Experience-lagret
+         *  - Kundvagnen ska sedan tömmas.
+        */
+    })
+
+    //  Det som sker när man ändrar quantity
+    $('#quantity').click(function () {
+       /*  Det som ska göras:
+         *  - Hämta det nya värdet i quantity
+         *  - Lägga till det nya antalet i rätt produkt i Kundvagnen
+         *  - Multiplicera priset på produkten med det nya antalet
+         *  - Ändra totala priset i kundvagnen
+        */ 
+    })
+
+</script>
+
+<div class="container">
+    <!-- Ändra till Html.TextBoxFor(m => m.CustomerId,  new { class = "form-control" })? -->
+    <div>
+        <label class="col-md-2 control-label">Customer Id:</label>
+        <div class="col-md-10">
+            <input class="form-control"
+                   id="customeridtb"
+                   name="customerid"
+                   type="text"
+                   value="Ex. 1"
+                   style="max-width:10%" />
+        </div>
+    </div>
+
+    <br />
+    <!-- Products table start -->
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:60%">Product</th>
+                <th style="width:15%">Price</th>
+                <th style="width:10%">Quantity</th>
+                <th style="width:15%"></th>
+            </tr>
+        </thead>
+            <tbody>
+                <!-- List of products in the cart -->
+                @foreach (var p in Model.Products)
+                {
+                <tr>
+                    <td data-th="Product">
+                        <div class="row">
+                            <div class="col-sm-3 hidden-xs" id="productImg"><img src="~/Img/@(p.ImgId).png" alt="..." class="img-fluid" /></div>
+                            <div class="col-sm-9">
+                                <h4 class="nomargin" id="productTitle">@p.Title</h4>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-th="Price">@p.Price</td>
+                    <td data-th="Quantity">
+                        <input type="number" class="form-control text-center" value="1" id="quantity">
+                    </td>
+                    <td class="actions" data-th="">
+                        <button class="btn btn-light btn-sm"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        <!-- Navigation buttons -->
+            <tfoot>
+                <tr>
+                    <td><a href="@Url.Action("Index", "Home")" class="btn btn-light"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                    <td colspan="2" class="hidden-xs"></td>
+                    <td class="hidden-xs text-center" id="totalPrice"><strong>Total $@Model.Total</strong></td>
+                    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#loadingModal" id="checkout">Checkout <i class="fa fa-angle-right"></i></button></td>
+                </tr>
+            </tfoot>
+     </table>
+</div>
+
+<!-- Modal Loading Screen -->
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center"
+                 style="/*background-image: url(https://www.pngitem.com/pimgs/m/347-3473177_transparent-public-domain-clipart-public-domain-unicorn-free.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;*/
+        opacity: 0.2
+        ">
+                <div class="spinner-border text-center m-5" style="width: 10rem; height: 10rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+
+            </div>
+            <p class="text-center">Processing order...</p>
+        </div>
+    </div>
+</div>

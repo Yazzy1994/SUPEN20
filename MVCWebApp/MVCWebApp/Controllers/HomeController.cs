@@ -19,7 +19,7 @@ namespace MVCWebApp.Controllers
         {
             _logger = logger;
 
-            client.BaseAddress = new Uri("http://localhost:51044/api/");
+            client.BaseAddress = new Uri("https://localhost:44305/api/");
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -28,35 +28,13 @@ namespace MVCWebApp.Controllers
         public IActionResult Index()
         {
             HttpResponseMessage response = client.GetAsync("/api/product").Result;
-            List<ProductModel> data =  response.Content.ReadAsAsync<List<ProductModel>>().Result; 
+            List<ProductModel> data = response.Content.ReadAsAsync<List<ProductModel>>().Result;
             return View(data);
-        }
-
-        public IActionResult Cart()
-        {
-            return View();
-        }
-
-        public ActionResult DisplayLoadning()
-        {
-            return PartialView(); 
         }
 
         public IActionResult About()
         {
             return View();
-        }
-
-
-        //Ta bort senare, bara för design
-        public IActionResult Loading()
-        {
-            return View();
-        }
-
-        public IActionResult Checkout()
-        {
-            return PartialView("_LoadingPartial", "Shared");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
