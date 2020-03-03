@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.4.1" />
     <PackageReference Include="FontAwesome.MVC" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ExpericeLayer\ExperinceApi\ExperinceApi.csproj" />
+    <ProjectReference Include="..\..\SystemLayer\SUPEN20_SystemLayer\SystemAPI\SystemAPI.csproj" />
   </ItemGroup>
 
 </Project>

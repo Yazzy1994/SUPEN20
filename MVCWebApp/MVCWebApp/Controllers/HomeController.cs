@@ -1,26 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVCWebApp.Models;
+using SystemAPI.Models;
 
 namespace MVCWebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private HttpClient client = new HttpClient(); 
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+
+            client.BaseAddress = new Uri("http://localhost:51044/api/");
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+      
         public IActionResult Index()
         {
-            return View();
+            HttpResponseMessage response = client.GetAsync("/api/product").Result;
+            List<ProductModel> data =  response.Content.ReadAsAsync<List<ProductModel>>().Result; 
+            return View(data);
         }
 
         public IActionResult Cart()
