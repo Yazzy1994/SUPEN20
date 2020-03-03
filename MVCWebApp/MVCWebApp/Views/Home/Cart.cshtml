@@ -1,10 +1,11 @@
 ﻿
 @{
     ViewData["Title"] = "Cart";
+    Layout = "_Layout";
 }
 
 
-<div class="container" id="body">
+<div class="container" id="cont">
     <table id="cart" class="table table-hover table-condensed">
         <thead>
             <tr>
@@ -40,16 +41,45 @@
                 <td><a href="@Url.Action("Index", "Home")" class="btn btn-info"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                 <td colspan="2" class="hidden-xs"></td>
                 <td class="hidden-xs text-center"><strong>Total $150.00</strong></td>
-                <td><a href="" class="btn btn-success btn-block" id="checkout">Checkout <i class="fa fa-angle-right"></i></a></td>
+                <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#loadingModal">Checkout <i class="fa fa-angle-right"></i></button></td>
             </tr>
         </tfoot>
     </table>
 </div>
 
-<script>
-    var url = '@Url.Action("Checkout", "Home")';
-    var hej;
-$('#checkout').click(function() {
-  $('#body').load(url);
-})
-</script>
+<!-- Modal Loading Screen -->
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center" style="/*background-image: url(https://www.pngitem.com/pimgs/m/347-3473177_transparent-public-domain-clipart-public-domain-unicorn-free.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;*/
+        opacity: 0.2
+        ">
+                <div class="spinner-border text-center m-5" style="width: 10rem; height: 10rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+
+            </div>
+            <p class="text-center">Processing order...</p>
+        </div>
+    </div>
+</div>
+
+
+@*<a href="" class="btn btn-success btn-block" id="checkout">Checkout <i class="fa fa-angle-right"></i></a>*@
+
+@*<script>
+    var url = "https://localhost:44311/Home/_LoadingPartial";
+    $('#checkout').click(function () {
+        //$('#cont').load(url);
+        $.ajax({
+            url: url, success: function (result) {
+                $("#cont").html(result);
+            }, error: function () {
+                alert("Hej");
+            }
+        });
+    });
+</script>*@
