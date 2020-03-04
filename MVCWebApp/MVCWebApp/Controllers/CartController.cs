@@ -43,6 +43,13 @@ namespace MVCWebApp.Controllers
             return View(CurrentCart);
         }
 
+        public IActionResult OrderStatus(Boolean status)
+        {
+            ViewBag.Message = status;
+
+            return View();
+        }
+
         // Lägger till en produkt i kundvagnen
         public void AddToCart(ProductModel product)
         {
