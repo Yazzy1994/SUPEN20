@@ -16,5 +16,8 @@ namespace MVCWebApp.Models
         public int Quantity { get; set; } = 1;
 
         public string ImgId { get; set; }
+
+
+        
     }
 }
