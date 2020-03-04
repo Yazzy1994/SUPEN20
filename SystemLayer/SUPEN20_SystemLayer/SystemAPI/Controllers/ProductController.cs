@@ -13,7 +13,7 @@ namespace SystemAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly SUPEN20DbContext _context;
+        private SUPEN20DbContext _context;
 
         public ProductController(SUPEN20DbContext context)
         {

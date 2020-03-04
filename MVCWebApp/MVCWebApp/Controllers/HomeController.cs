@@ -7,14 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVCWebApp.Models;
 using SystemAPI.Models;
+using System.Web;
 
 namespace MVCWebApp.Controllers
 {
     public class HomeController : Controller
     {
+        List<CartModel> cart = new List<CartModel>();
+        
         private readonly ILogger<HomeController> _logger;
-        private HttpClient client = new HttpClient(); 
-
+        private HttpClient client = new HttpClient();
+       
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -32,6 +35,8 @@ namespace MVCWebApp.Controllers
             return View(data);
         }
 
+
+
         public IActionResult About()
         {
             return View();
@@ -42,5 +47,10 @@ namespace MVCWebApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        
+
+       
+
     }
 }

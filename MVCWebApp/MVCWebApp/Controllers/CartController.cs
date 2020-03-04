@@ -2,52 +2,46 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVCWebApp.Models;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
+
 
 namespace MVCWebApp.Controllers
 {
+
     public class CartController : Controller
     {
         public static CartModel CurrentCart { get; set; } = new CartModel();
 
         private HttpClient client = new HttpClient();
 
-        public CartController()
-        {
-            client.BaseAddress = new Uri("http://localhost:51044/api/");
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+       
 
-        }
+     
 
         // Tillfälligt: Hämtar och lägger till alla produkter från databasen i kundvagnen
         public IActionResult Cart()
         {
-            if (CurrentCart.Products.Count() == 0)
-            {
-                HttpResponseMessage response = client.GetAsync("/api/product").Result;
-                List<ProductModel> data = response.Content.ReadAsAsync<List<ProductModel>>().Result;
-            
-                foreach (var p in data)
-                {
-                    AddToCart(p);
-                }
-            }
 
-            CurrentCart.Total = CartTotal(CurrentCart);
-
-            return View(CurrentCart);
+            return View(CurrentCart); 
         }
-
-        // Lägger till en produkt i kundvagnen
-        public void AddToCart(ProductModel product)
+        
+        public IActionResult AddProductToCart(ProductModel product)
         {
-            CurrentCart.Products.Add(product);
+           CurrentCart.Products.Add(product);
+            return RedirectToAction("Index", "Home");
         }
+
+       
 
         // Tar bort en produkt-typ ur kundvagnen
         public IActionResult RemoveItemFromCart(Guid product)
@@ -82,5 +76,29 @@ namespace MVCWebApp.Controllers
             }
             return total;
         }
+
+        private int Exists(Guid id)
+        {
+
+            List<CartModel> cart = new List<CartModel>(); 
+            for (var i = 0; i < cart.Count; i++)
+            {
+                if (cart[i].Products.Equals(id))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public ProductModel Find(Guid products)
+        {
+
+            var list = new List<ProductModel>();
+            return list.Find(p => p.ProductId == products);
+
+        }
+
+
     }
 }

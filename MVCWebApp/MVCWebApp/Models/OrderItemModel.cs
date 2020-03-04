@@ -12,6 +12,7 @@ namespace MVCWebApp.Models
 
 
         public Guid ProductId { get; set; }
+        public Guid OrderId { get; set; }
         public string ProductTitle { get; set; }
         public string ProductDescription { get; set; }
         public int Quantity { get; set; }

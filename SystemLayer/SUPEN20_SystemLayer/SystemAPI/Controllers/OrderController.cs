@@ -25,20 +25,23 @@ namespace SystemAPI.Controllers
 
         //POST: api/orders
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder([FromBody]Order order)
+        public async Task<ActionResult<Order>> CreateOrder([FromBody]OrderDto orderDto)
         {
             var validator = new SaveOrderValidator();
-            var validationResult = await validator.ValidateAsync(order);
+           var orderEntity =  _mapper.Map<OrderDto, Order>(orderDto);
+            var validationResult = await validator.ValidateAsync(orderEntity);
+
 
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);
             }
 
-            var orderFromRepo = _orderRespository.AddAsync(order);
+            var orderFromRepo = _orderRespository.AddAsync(orderEntity);
             await _orderRespository.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrders", new { id = order.OrderId },_mapper.Map<Order, OrderDto>(order)); //CreatedAtAction method returns HTTP 201 status code, if successful.
+
+            return CreatedAtAction("GetOrders", new { id = orderDto.OrderId }); //CreatedAtAction method returns HTTP 201 status code, if successful.
         }
 
         //DELETE: api/orders/{orderId}

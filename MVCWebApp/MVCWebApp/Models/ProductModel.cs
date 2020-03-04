@@ -17,7 +17,7 @@ namespace MVCWebApp.Models
 
         public string ImgId { get; set; }
 
-
         
+
     }
 }
