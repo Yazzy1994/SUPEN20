@@ -12,17 +12,17 @@
     <div class="row d-flex justify-content-center">
         @foreach (var p in Model)
         {
-            <div class="col-md-3">
-                <div class="border bg-light rounded p-1">
+            <div class="col-md-3 p-3">
+                <div class="border bg-white rounded p-1">
                     <img src="~/Img/@(p.ImgId).png" class="img-fluid" alt="@p.Title" />
                     <div class="card-body">
-                        <h5 class="text-center font-weight-normal">@p.Title</h5>
+                        <p class="text-center font-weight-normal"><small>@p.Title</small></p>
                         <ul class="list-group text-center" style="list-style-type: none;">
-                            <li>Price: @p.Price</li>
+                            <li><small>Price: $@p.Price</small></li>
                         </ul>
                     </div>
-                    <div class="card-footer">
-                        <button asp-controller="OrderItem" asp-action="AddToCart" asp-route-id="@p.ProductId" id="buyButtom" class="btn btn-success btn-block"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                    <div class="card-footer bg-white">
+                        <button asp-controller="OrderItem" asp-action="AddToCart" asp-route-id="@p.ProductId" id="buyButtom" class="btn btn-light btn-block" style="background-color: #ea9999; color: white;"><i class="fa fa-shopping-cart"></i> Add to cart</button>
                     </div>
                 </div>
             </div>
