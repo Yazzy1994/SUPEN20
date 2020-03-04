@@ -17,10 +17,14 @@ namespace SUPEN20DB.Seeder
             {
                 var products = new List<Product>()
                 {
-                    new Product { /*Id = 1,*/ Title = "It's Funny Because It's True", Description = "A grey T-shirt made of ecologically sustainable wool. Slim fit.", Price = 200, ImgId = "Its_Funny_Because_Its_True"},
-                    new Product { /*Id = 2,*/ Title = "Think Outside The Box", Description = "A white T-shirt with beautiful print made of ecologically sustainable wool. Slim fit.", Price = 400, ImgId = "Think_outside_the_box"},
-                    new Product { /*Id = 1,*/ Title = "Change The World", Description = "UnicornsCanCode's original T-shirt. Made of ecologically sustainable wool. Slim fit.", Price = 300, ImgId = "Change_The_World"},
-                    new Product { /*Id = 2,*/ Title = "My Code Works", Description = "A grey T-shirt made of ecologically sustainable wool. Slim fit.", Price = 300, ImgId = "My_Code_Works"}
+                    new Product {Title = "It's Funny Because It's True", Description = "A grey T-shirt made of ecologically sustainable wool. Slim fit.", Price = 200, ImgId = "Its_Funny_Because_Its_True"},
+                    new Product {Title = "Think Outside The Box", Description = "A white T-shirt with beautiful print made of ecologically sustainable wool. Slim fit.", Price = 400, ImgId = "Think_outside_the_box"},
+                    new Product {Title = "Change The World", Description = "UnicornsCanCode's original T-shirt. Made of ecologically sustainable wool. Slim fit.", Price = 300, ImgId = "Change_The_World"},
+                    new Product {Title = "My Code Works", Description = "A grey T-shirt made of ecologically sustainable wool. Slim fit.", Price = 300, ImgId = "My_Code_Works"},
+                    new Product {Title = "Code Blooded", Description = "A red T-shirt made of ecologically sustainable wool. Slim fit.", Price = 150, ImgId = "Code_Blooded"},
+                    new Product {Title = "Coding Girl", Description = "A navy blue T-shirt with beautiful print made of ecologically sustainable wool. Slim fit.", Price = 200, ImgId = "Coding_Girl"},
+                    new Product {Title = "Eat Code Sleep", Description = "Black shirt made of ecologically sustainable wool. Slim fit.", Price = 300, ImgId = "Eat_Code_Sleep"},
+                    new Product {Title = "Unicorns Can Code", Description = "A white T-shirt made of ecologically sustainable wool. Slim fit.", Price = 300, ImgId = "Unicorns_can_code"}
                 };
                 context.Products.AddRange(products);
                 context.SaveChanges();
