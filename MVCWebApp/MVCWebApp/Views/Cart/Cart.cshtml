@@ -7,58 +7,16 @@
 
 @*http://placehold.it/100x100*@
 
-<script>
-    // Anropa metoden som skickar iväg ordern
-    $('#checkout').click(function () {
-        /*  Det som ska göras:
-         *  - KundId ska kollas och sedan läggas till i kundvagnen
-         *  - Hela kundvagnen ska skickas med till den metod som sedan anropar APIn i Experience-lagret
-         *  - Kundvagnen ska sedan tömmas.
-        */
-    })
-
  
-    // Anropar metod i controllern som uppdaterar quantity i databasen
-    // EJ KLAR
-    function changeQuantity(p) {
-        var q = document.getElementById('quantity');
-
-        if (p != null && q != null) {
-            var url = '@("window.location.href='" + @Url.Action("UpdateProductQuantity", "Cart")+ "'");';
-
-            $.ajax({
-                url: url, 
-                data: { product: p, quantity: q }
-            })
-        
-        }
-       
-    }
-
-</script>
-
-<div class="container">
-    <!-- Ändra till Html.TextBoxFor(m => m.CustomerId,  new { class = "form-control" })? -->
-    <div>
-        <label class="col-md-2 control-label">Customer Id:</label>
-        <div class="col-md-10">
-            <input class="form-control"
-                   id="customeridtb"
-                   name="customerid"
-                   type="text"
-                   value="Ex. 1"
-                   style="max-width:10%" />
-        </div>
-    </div>
-
-    <br />
     <!-- Products table start -->
+<div>
     <table id="cart" class="table table-hover table-condensed">
         <thead>
             <tr>
-                <th style="width:60%">Product</th>
+                <th style="width:55%">Product</th>
                 <th style="width:15%">Price</th>
                 <th style="width:10%">Quantity</th>
+                <th style="width:5%"></th>
                 <th style="width:15%"></th>
             </tr>
         </thead>
@@ -75,26 +33,37 @@
                             </div>
                         </div>
                     </td>
-                    <td data-th="Price">@p.Price</td>
-                    <td data-th="Quantity">
-                        <input type="number" class="form-control text-center" value="@p.Quantity" id="quantity" onclick="changeQuantity(@p.ProductId);">
+                    <td data-th="Price">$@p.Price</td>
+                    <td data-th="Quantity" >
+                        <div class="row">
+                            <div class="col-sm-4 pl-2">
+                                <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("UpdateProductQuantity", "Cart", new { product = p.ProductId, quantity = (p.Quantity + 1)})+ "'");">+</button>
+                            </div>
+                            <div class="col-sm-1 text-center">
+                                <label class="" id="quantity"> @p.Quantity</label>
+                            </div>
+                            <div class="col-sm-4 pl-0">
+                                <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("UpdateProductQuantity", "Cart", new { product = p.ProductId , quantity = (p.Quantity - 1)})+ "'");">-</button>
+                            </div>
+                        </div>
+                        @* Previous input type: <input type="number" class="form-control text-center" value="@p.Quantity" id="quantity" onclick="">*@
+
                     </td>
+                    <td></td>
                     <!-- Ska också ta bort produkten ur listan.. -->
-                    <td class="actions" data-th="">
+                    <td class="actions text-center" data-th="">
                         <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("RemoveItemFromCart", "Cart", new { product = p.ProductId })+ "'");"><i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>
             }
-
-            <!--onclick="("window.location.href='" + Url.Action("About", "Home") + "'");"-->
 
         </tbody>
         <!-- Navigation buttons -->
             <tfoot>
                 <tr>
                     <td><a href="@Url.Action("Index", "Home")" class="btn btn-light"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-                    <td colspan="2" class="hidden-xs"></td>
                     <td class="hidden-xs text-center" id="totalPrice"><strong>Total $@Model.Total</strong></td>
+                    <td colspan="2" class="hidden-xs"></td>
                     <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#loadingModal" id="checkout">Checkout <i class="fa fa-angle-right"></i></button></td>
                 </tr>
             </tfoot>
