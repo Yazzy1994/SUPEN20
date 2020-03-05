@@ -11,7 +11,8 @@ namespace SystemAPI.Profiles
     {
         public CreditProfile()
         {
-            CreateMap<Credit, Models.CreditDTO>();
+            CreateMap<Credit, Models.CreditDTO>()
+                .ReverseMap();
         }
     }
 }
