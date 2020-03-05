@@ -34,7 +34,7 @@
                         </div>
                     </td>
                     <td data-th="Price">$@p.Price</td>
-                    <td data-th="Quantity" >
+                    <td data-th="Quantity">
                         <div class="row">
                             <div class="col-sm-4 pl-2">
                                 <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("UpdateProductQuantity", "Cart", new { product = p.ProductId, quantity = (p.Quantity + 1)})+ "'");">+</button>
@@ -46,15 +46,34 @@
                                 <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("UpdateProductQuantity", "Cart", new { product = p.ProductId , quantity = (p.Quantity - 1)})+ "'");">-</button>
                             </div>
                         </div>
-                        @* Previous input type: <input type="number" class="form-control text-center" value="@p.Quantity" id="quantity" onclick="">*@
-
                     </td>
                     <td></td>
                     <!-- Ska också ta bort produkten ur listan.. -->
                     <td class="actions text-center" data-th="">
-                        <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("RemoveItemFromCart", "Cart", new { product = p.ProductId })+ "'");"><i class="fa fa-trash-o"></i></button>
+                        <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#removeApproval"><i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>
+
+                <!-- Modal Approve Remove-->
+                <div class="modal fade" id="removeApproval" tabindex="-1" role="dialog" aria-labelledby="removeApprovalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Do you want to remove this product from the cart?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <button type="button" class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("RemoveItemFromCart", "Cart", new { product = p.ProductId })+ "'");">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
 
         </tbody>
@@ -70,8 +89,10 @@
      </table>
 </div>
 
+
+
 <!-- Modal Loading Screen -->
-<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body text-center"

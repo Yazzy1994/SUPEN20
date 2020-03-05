@@ -30,8 +30,7 @@ namespace MVCWebApp.Controllers
         // Tillfälligt: Hämtar och lägger till alla produkter från databasen i kundvagnen
         public IActionResult Cart()
         {
-            
-           CurrentCart.Total = CartTotal(CurrentCart);
+            CurrentCart.Total = CartTotal(CurrentCart);
 
             return View(CurrentCart);
         }
@@ -99,6 +98,21 @@ namespace MVCWebApp.Controllers
                 total += subtotal;
             }
             return total;
+        }
+
+        // Calculates the total amouont of items in the cart
+        // Used for the item count in the meny icon for the cart
+        public static int ItemAmountInCart()
+        {
+            var amount = 0;
+            if (CurrentCart.Products.Count() != 0)
+            {
+                foreach (var p in CurrentCart.Products)
+                {
+                    amount += p.Quantity;
+                }
+            }
+            return amount;
         }
     }
 }
