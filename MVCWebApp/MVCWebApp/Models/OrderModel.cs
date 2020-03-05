@@ -10,8 +10,7 @@ namespace MVCWebApp.Models
 {
     public class OrderModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+      
         public Guid OrderId { get; set; }
         public int OrderNumber { get; set; }
         public ICollection<OrderItemModel> OrderItems { get; set; }

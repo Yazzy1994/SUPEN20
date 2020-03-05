@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVCWebApp.Models;
@@ -13,11 +14,13 @@ namespace MVCWebApp.Controllers
     public class CartController : Controller
     {
         public static CartModel CurrentCart { get; set; } = new CartModel();
+        private readonly IMapper _mapper;
 
         private HttpClient client = new HttpClient();
 
-        public CartController()
+        public CartController(IMapper mapper)
         {
+            _mapper = mapper; 
             client.BaseAddress = new Uri("https://localhost:44305/");
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -27,18 +30,8 @@ namespace MVCWebApp.Controllers
         // Tillfälligt: Hämtar och lägger till alla produkter från databasen i kundvagnen
         public IActionResult Cart()
         {
-            if (CurrentCart.Products.Count() == 0)
-            {
-                HttpResponseMessage response = client.GetAsync("/api/product").Result;
-                List<ProductModel> data = response.Content.ReadAsAsync<List<ProductModel>>().Result;
             
-                foreach (var p in data)
-                {
-                    AddToCart(p);
-                }
-            }
-
-            CurrentCart.Total = CartTotal(CurrentCart);
+           CurrentCart.Total = CartTotal(CurrentCart);
 
             return View(CurrentCart);
         }
@@ -50,11 +43,29 @@ namespace MVCWebApp.Controllers
             return View();
         }
 
+
         // Lägger till en produkt i kundvagnen
-        public void AddToCart(ProductModel product)
+        public IActionResult AddProductToCart(ProductModel product)
         {
+            var id = product.ProductId; //Ifall samma productId läggs till i kundvagn så kör foreach för att loopa igenom alla produkter somm läggs i kundvagnen. Om productId redan finns läggs till så ökas det kvantitet istället för att lägga till samma produkt flera gånger. 
+
+            
+            foreach(var p in CurrentCart.Products)
+            {
+                if(p.ProductId == id)
+                {
+                    p.Quantity += 1;
+                    return RedirectToAction("Index", "Home");
+                }
+                
+            }
+
             CurrentCart.Products.Add(product);
+            return RedirectToAction("Index", "Home");
         }
+            
+
+        
 
         // Tar bort en produkt-typ ur kundvagnen
         public IActionResult RemoveItemFromCart(Guid product)
@@ -69,7 +80,7 @@ namespace MVCWebApp.Controllers
             return RedirectToAction("Cart");
         }
 
-        public IActionResult UpdateProductQuantity(Guid product, int quantity)
+        public IActionResult UpdateProductQuantity(Guid product, int quantity) 
         {
             var p = CurrentCart.Products.Where(p => p.ProductId == product).FirstOrDefault();
 
