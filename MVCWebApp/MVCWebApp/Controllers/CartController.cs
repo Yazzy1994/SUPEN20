@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVCWebApp.Models;
@@ -40,6 +42,14 @@ namespace MVCWebApp.Controllers
             ViewBag.Message = status;
 
             return View();
+        }
+
+        [Authorize]
+        public IActionResult CreateOrder()
+        {
+
+
+            return RedirectToAction("Cart"); 
         }
 
 

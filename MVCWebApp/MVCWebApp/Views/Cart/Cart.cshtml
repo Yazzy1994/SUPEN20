@@ -86,7 +86,7 @@
                     <td><a href="@Url.Action("Index", "Home")" class="btn btn-light"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                     <td class="hidden-xs text-center" id="totalPrice"><strong>Total $@Model.Total</strong></td>
                     <td colspan="2" class="hidden-xs"></td>
-                    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#loadingModal" id="checkout">Checkout <i class="fa fa-angle-right"></i></button></td>
+                    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#loadingModal" id="checkout" onclick="@("window.location.href='" + @Url.Action("CreateOrder", "Cart")+ "'");">Checkout <i class="fa fa-angle-right"></i></button></td>
                 </tr>
             </tfoot>
      </table>
