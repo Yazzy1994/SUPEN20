@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,5 +18,6 @@ namespace SUPEN20DB.Entites
         public decimal Price { get; set; }
 
         public string ImgId { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }
