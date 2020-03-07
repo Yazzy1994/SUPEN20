@@ -22,7 +22,7 @@ namespace MVCWebApp.Controllers
         {
             _logger = logger;
 
-            client.BaseAddress = new Uri("https://localhost:44305/");
+            client.BaseAddress = new Uri("http://localhost:51044");
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
