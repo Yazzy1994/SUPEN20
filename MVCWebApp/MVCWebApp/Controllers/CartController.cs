@@ -21,7 +21,7 @@ namespace MVCWebApp.Controllers
         public CartController(IMapper mapper)
         {
             _mapper = mapper; 
-            client.BaseAddress = new Uri("https://localhost:44305/");
+            client.BaseAddress = new Uri("https://localhost:44311/");
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 

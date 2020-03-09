@@ -22,7 +22,7 @@ namespace MVCWebApp.Controllers
         {
             _logger = logger;
 
-            client.BaseAddress = new Uri("https://localhost:44305/");
+            client.BaseAddress = new Uri("https://localhost:44311/");
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -30,7 +30,7 @@ namespace MVCWebApp.Controllers
       
         public IActionResult Index()
         {
-            HttpResponseMessage response = client.GetAsync("/api/product").Result;
+            HttpResponseMessage response = client.GetAsync("/api/products").Result;
             List<ProductModel> data = response.Content.ReadAsAsync<List<ProductModel>>().Result;
             return View(data);
         }

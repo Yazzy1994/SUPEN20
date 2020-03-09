@@ -20,7 +20,7 @@ namespace SystemAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Product
+        // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
@@ -35,7 +35,7 @@ namespace SystemAPI.Controllers
             }
         }
 
-        // GET: api/Product/5 
+        // GET: api/Products/5 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(Guid id)
         {
@@ -55,7 +55,7 @@ namespace SystemAPI.Controllers
             }
         }
 
-        // PUT: api/Product/5 
+        // PUT: api/Products/5 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(Guid id, Product product)
         {
@@ -91,7 +91,7 @@ namespace SystemAPI.Controllers
             
         }
 
-        // POST: api/Product 
+        // POST: api/Products 
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
@@ -108,7 +108,7 @@ namespace SystemAPI.Controllers
             }
         }
 
-        // DELETE: api/Product/5 
+        // DELETE: api/Products/5 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(Guid id)
         {
