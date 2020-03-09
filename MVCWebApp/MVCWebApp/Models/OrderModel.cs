@@ -16,6 +16,9 @@ namespace MVCWebApp.Models
         public ICollection<OrderItemModel> OrderItems { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public string CustomerId { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal Total { get; set; }
         public DateTime Created { get; set; } = DateTime.Now; 
+
     }
 }

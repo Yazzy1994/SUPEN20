@@ -55,8 +55,9 @@ namespace MVCWebApp.Controllers
                     ProductId = product.ProductId,
                     ProductDescription = product.Description,
                     ProductPrice = product.Price,
+                    ProductTitle = product.Title,
                     Quantity = product.Quantity,
-                    Total = CurrentCart.Total
+                 
                 };
                 orderItems.Add(items);
             }
@@ -68,7 +69,8 @@ namespace MVCWebApp.Controllers
                 Created = DateTime.Now,
                 OrderStatus = 0,
                 OrderItems = orderItems,
-                CustomerId = User.FindFirstValue(ClaimTypes.NameIdentifier) // will give the user's userId
+                CustomerId = User.FindFirstValue(ClaimTypes.NameIdentifier), // will give the user's userId
+                Total = CurrentCart.Total
             };
 
             HttpResponseMessage response = client.PostAsJsonAsync("/api/orders/", order).Result;

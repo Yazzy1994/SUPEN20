@@ -26,5 +26,6 @@ namespace SUPEN20DB.Entites
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public OrderStatus OrderStatus { get; set; }
         public string CustomerId { get; set; }
+        public decimal Total { get; set; }
     }
 }

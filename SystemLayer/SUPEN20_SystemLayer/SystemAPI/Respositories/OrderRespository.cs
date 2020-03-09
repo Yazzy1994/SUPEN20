@@ -19,9 +19,12 @@ namespace SystemAPI.Services
 
         public async Task AddAsync(Order order)
         {
-            foreach (var item in order.OrderItems)
+            foreach (var item in order.OrderItems) 
             {
-                item.Product = _context.Products.Find(item.Product.ProductId);
+                var quantity = item.Product.Quantity; //Sparar quantity från det som kommer från currentCart 
+                item.Product = _context.Products.Find(item.Product.ProductId); //Detta hämtar produkten från databasen, men för att quantity är hårt kodat så skriver den över quantity från currentCart
+                item.Product.Quantity = quantity; //Denna sätter tillbaka quantity till den currantcart quantity. 
+
             }
 
             await _context.Set<Order>().AddAsync(order);
