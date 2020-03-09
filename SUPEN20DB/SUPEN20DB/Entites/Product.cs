@@ -7,6 +7,9 @@ namespace SUPEN20DB.Entites
 {
     public class Product
     {
+
+    
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ProductId { get; set; }
@@ -17,7 +20,10 @@ namespace SUPEN20DB.Entites
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
+        public int Quantity { get; set; }
+
         public string ImgId { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>(); 
+        public DateTime Created { get; set; } = DateTime.Now;
     }
 }

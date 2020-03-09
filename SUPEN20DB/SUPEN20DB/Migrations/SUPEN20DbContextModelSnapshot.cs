@@ -48,6 +48,9 @@ namespace SUPEN20DB.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
@@ -70,12 +73,12 @@ namespace SUPEN20DB.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("OrderItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18, 2)");
@@ -93,19 +96,33 @@ namespace SUPEN20DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImgId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("OrderItemOrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OrderItemProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("OrderItemProductId", "OrderItemOrderId");
 
                     b.ToTable("Products");
                 });
@@ -123,6 +140,13 @@ namespace SUPEN20DB.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SUPEN20DB.Entites.Product", b =>
+                {
+                    b.HasOne("SUPEN20DB.Entites.OrderItem", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderItemProductId", "OrderItemOrderId");
                 });
 #pragma warning restore 612, 618
         }

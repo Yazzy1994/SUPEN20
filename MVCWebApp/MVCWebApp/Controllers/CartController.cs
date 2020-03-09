@@ -1,15 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MVCWebApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MVCWebApp.Models;
+using System.Security.Claims;
 
 namespace MVCWebApp.Controllers
 {
@@ -22,11 +20,10 @@ namespace MVCWebApp.Controllers
 
         public CartController(IMapper mapper)
         {
-            _mapper = mapper; 
+            _mapper = mapper;
             client.BaseAddress = new Uri("http://localhost:51044");
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-
         }
 
         // Tillfälligt: Hämtar och lägger till alla produkter från databasen i kundvagnen
@@ -47,34 +44,56 @@ namespace MVCWebApp.Controllers
         [Authorize]
         public IActionResult CreateOrder()
         {
+            var orderId = Guid.NewGuid();
 
+            List<OrderItemModel> orderItems = new List<OrderItemModel>();
+            foreach (var product in CurrentCart.Products)
+            {
+                var items = new OrderItemModel()
+                {
+                    OrderItemId = Guid.NewGuid(),
+                    ProductId = product.ProductId,
+                    ProductDescription = product.Description,
+                    ProductPrice = product.Price,
+                    Quantity = product.Quantity,
+                    Total = CurrentCart.Total
+                };
+                orderItems.Add(items);
+            }
 
-            return RedirectToAction("Cart"); 
+            var order = new OrderModel()
+            {
+                OrderId = orderId,
+                OrderNumber = 123,
+                Created = DateTime.Now,
+                OrderStatus = 0,
+                OrderItems = orderItems,
+                CustomerId = User.FindFirstValue(ClaimTypes.NameIdentifier) // will give the user's userId
+            };
+
+            HttpResponseMessage response = client.PostAsJsonAsync("/api/orders/", order).Result;
+            response.Content.ReadAsStringAsync();
+
+            return RedirectToAction("Cart");
         }
-
 
         // Lägger till en produkt i kundvagnen
         public IActionResult AddProductToCart(ProductModel product)
         {
-            var id = product.ProductId; //Ifall samma productId läggs till i kundvagn så kör foreach för att loopa igenom alla produkter somm läggs i kundvagnen. Om productId redan finns läggs till så ökas det kvantitet istället för att lägga till samma produkt flera gånger. 
+            var id = product.ProductId; //Ifall samma productId läggs till i kundvagn så kör foreach för att loopa igenom alla produkter somm läggs i kundvagnen. Om productId redan finns läggs till så ökas det kvantitet istället för att lägga till samma produkt flera gånger.
 
-            
-            foreach(var p in CurrentCart.Products)
+            foreach (var p in CurrentCart.Products)
             {
-                if(p.ProductId == id)
+                if (p.ProductId == id)
                 {
                     p.Quantity += 1;
                     return RedirectToAction("Index", "Home");
                 }
-                
             }
 
             CurrentCart.Products.Add(product);
             return RedirectToAction("Index", "Home");
         }
-            
-
-        
 
         // Tar bort en produkt-typ ur kundvagnen
         public IActionResult RemoveItemFromCart(Guid product)
@@ -89,7 +108,7 @@ namespace MVCWebApp.Controllers
             return RedirectToAction("Cart");
         }
 
-        public IActionResult UpdateProductQuantity(Guid product, int quantity) 
+        public IActionResult UpdateProductQuantity(Guid product, int quantity)
         {
             var p = CurrentCart.Products.Where(p => p.ProductId == product).FirstOrDefault();
 
@@ -102,7 +121,7 @@ namespace MVCWebApp.Controllers
         public decimal CartTotal(CartModel cart)
         {
             decimal total = 0;
-            foreach(var p in cart.Products)
+            foreach (var p in cart.Products)
             {
                 var subtotal = p.Price * p.Quantity;
                 total += subtotal;

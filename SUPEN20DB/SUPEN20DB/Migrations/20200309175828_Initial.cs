@@ -29,7 +29,8 @@ namespace SUPEN20DB.Migrations
                     Created = table.Column<DateTime>(nullable: false),
                     LastModified = table.Column<DateTime>(nullable: false),
                     OrderNumber = table.Column<int>(nullable: false),
-                    OrderStatus = table.Column<int>(nullable: false)
+                    OrderStatus = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,7 +45,11 @@ namespace SUPEN20DB.Migrations
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    ImgId = table.Column<string>(nullable: true)
+                    Quantity = table.Column<int>(nullable: false),
+                    ImgId = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    OrderItemOrderId = table.Column<Guid>(nullable: true),
+                    OrderItemProductId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,27 +60,27 @@ namespace SUPEN20DB.Migrations
                 name: "OrderItems",
                 columns: table => new
                 {
+                    ProductId = table.Column<Guid>(nullable: false),
+                    OrderId = table.Column<Guid>(nullable: false),
                     OrderItemId = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: true),
-                    Quantity = table.Column<int>(nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    OrderId = table.Column<Guid>(nullable: true)
+                    Created = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItems", x => x.OrderItemId);
+                    table.PrimaryKey("PK_OrderItems", x => new { x.ProductId, x.OrderId });
                     table.ForeignKey(
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -84,24 +89,40 @@ namespace SUPEN20DB.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_ProductId",
-                table: "OrderItems",
-                column: "ProductId");
+                name: "IX_Products_OrderItemProductId_OrderItemOrderId",
+                table: "Products",
+                columns: new[] { "OrderItemProductId", "OrderItemOrderId" });
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Products_OrderItems_OrderItemProductId_OrderItemOrderId",
+                table: "Products",
+                columns: new[] { "OrderItemProductId", "OrderItemOrderId" },
+                principalTable: "OrderItems",
+                principalColumns: new[] { "ProductId", "OrderId" },
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Credits");
+            migrationBuilder.DropForeignKey(
+                name: "FK_OrderItems_Orders_OrderId",
+                table: "OrderItems");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_OrderItems_Products_ProductId",
+                table: "OrderItems");
 
             migrationBuilder.DropTable(
-                name: "OrderItems");
+                name: "Credits");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "OrderItems");
         }
     }
 }

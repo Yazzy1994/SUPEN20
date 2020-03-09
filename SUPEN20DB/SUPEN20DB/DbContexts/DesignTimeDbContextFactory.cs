@@ -9,7 +9,7 @@ namespace SUPEN20DB.DbContexts
     {
         public SUPEN20DbContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../../SystemLayer/SUPEN20_SystemLayer/SystemAPI/appsettings.json").Build(); //IConfiguration in which you set the base path to the main project directory.
+            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "../../../SystemLayer/SUPEN20_SystemLayer/SystemAPI/appsettings.json").Build(); //IConfiguration in which you set the base path to the main project directory.
 
             var builder = new DbContextOptionsBuilder<SUPEN20DbContext>();
             var connectionString = configuration.GetConnectionString("DatabaseConnection");

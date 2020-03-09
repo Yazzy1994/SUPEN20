@@ -26,13 +26,15 @@ namespace SystemAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.AddDbContext<SUPEN20DbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection"));
+
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //AddAutoMapper is define in AutoMapper. This method allows me to input a set of assemblies. It is these assemblies that will automatically get scanned for profiles that contain mapping configurations.  
 
-            services.AddDbContext<SUPEN20DbContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection"));
-            
-            });
+        
          
             services.AddTransient<DataSeeder>();
             services.AddScoped(typeof(IRespository<Order>), typeof(OrderRespository)); //Able to use the respository interface, We need to configure dependency injection.This Scoped service takes our interface and our implementation with DbContext

@@ -14,15 +14,17 @@ namespace SUPEN20DB.Entites
 
     public class Order
     {
-        public DateTime Created { get; set; } = DateTime.UtcNow;
-        public DateTime LastModified { get; set; } = DateTime.UtcNow;
+     
+        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime LastModified { get; set; } = DateTime.Now;
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid OrderId { get; set; }
 
         public int OrderNumber { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public OrderStatus OrderStatus { get; set; }
+        public string CustomerId { get; set; }
     }
 }

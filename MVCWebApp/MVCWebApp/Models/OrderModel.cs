@@ -15,6 +15,7 @@ namespace MVCWebApp.Models
         public int OrderNumber { get; set; }
         public ICollection<OrderItemModel> OrderItems { get; set; }
         public OrderStatus OrderStatus { get; set; }
+        public string CustomerId { get; set; }
         public DateTime Created { get; set; } = DateTime.Now; 
     }
 }

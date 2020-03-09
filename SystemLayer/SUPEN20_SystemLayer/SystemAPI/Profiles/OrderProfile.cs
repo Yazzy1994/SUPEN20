@@ -17,10 +17,13 @@ namespace SystemAPI.Profiles
 
             CreateMap<OrderItem, OrderItemDto>() //This mapp from OrderItem to OrderItemDto
             .ForMember(o => o.ProductId, ex => ex.MapFrom(o => o.Product.ProductId))
+            .ForMember(o => o.ProductDescription, ex => ex.MapFrom(o => o.Product.Description))
+            .ForMember(o => o.ProductPrice, ex => ex.MapFrom(o => o.Product.Price))
+            .ForMember(o => o.Quantity, ex => ex.MapFrom(o => o.Product.Quantity))
             .ReverseMap();
 
             CreateMap<Product, ProductsDto>()
-                .ReverseMap(); 
+                .ReverseMap();
 
         }
     }

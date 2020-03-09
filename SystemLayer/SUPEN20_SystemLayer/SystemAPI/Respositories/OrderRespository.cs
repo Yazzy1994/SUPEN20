@@ -19,6 +19,11 @@ namespace SystemAPI.Services
 
         public async Task AddAsync(Order order)
         {
+            foreach (var item in order.OrderItems)
+            {
+                item.Product = _context.Products.Find(item.Product.ProductId);
+            }
+
             await _context.Set<Order>().AddAsync(order);
            
         }
