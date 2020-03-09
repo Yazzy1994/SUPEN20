@@ -10,8 +10,8 @@ using SUPEN20DB.DbContexts;
 namespace SUPEN20DB.Migrations
 {
     [DbContext(typeof(SUPEN20DbContext))]
-    [Migration("20200304113448_Initial")]
-    partial class Initial
+    [Migration("20200309183341_Initital")]
+    partial class Initital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
