@@ -5,7 +5,7 @@ namespace MVCWebApp.Models
 {
     public class ProductModel
     {
-        public Guid ProductId { get; set; }
+        public Guid ProductId { get; set; } 
 
         public string Title { get; set; }
         public string Description { get; set; }

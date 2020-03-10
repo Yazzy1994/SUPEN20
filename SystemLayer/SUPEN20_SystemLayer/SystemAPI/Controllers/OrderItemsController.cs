@@ -15,14 +15,15 @@ namespace SystemAPI.Controllers
     public class OrderItemsController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IRespository<Order> _orderRespository;
+        private readonly IRepository<Order> _orderRespository;
         public OrderItemsController(
-            IRespository<Order> orderRespository, IMapper mapper)
+            IRepository<Order> orderRespository, IMapper mapper)
         {
             _orderRespository = orderRespository;
             _mapper = mapper;
         }
 
+        //GET : api/orders/{orderId}/items
         [HttpGet]
         public async ValueTask<ActionResult<OrderItem>> GetOrderItem(Guid orderId)
         {
@@ -44,7 +45,7 @@ namespace SystemAPI.Controllers
                 return StatusCode(500);
             }
         }
-
+        //GET : api/orders/{orderId}/items/{orderItemId}
         [HttpGet("{orderItemId}")]
         public async ValueTask<ActionResult<OrderItem>> GetOrderItemById(Guid orderId, Guid orderItemId)
         {
@@ -68,5 +69,7 @@ namespace SystemAPI.Controllers
                 return StatusCode(500);
             }
         }
+
+     
     }
 }

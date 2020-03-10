@@ -13,7 +13,7 @@ namespace SUPEN20DB.DbContexts
         public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Credit> Credits { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder) //This is a part of the join table configuration that goes throu the Fluent API for EF Core to be able to map it successfully. 
         {
             modelBuilder.Entity<OrderItem>()
                 .HasKey(oi => new { oi.ProductId, oi.OrderId });
@@ -26,5 +26,6 @@ namespace SUPEN20DB.DbContexts
                 .WithMany(o => o.OrderItems)
                 .HasForeignKey(oi => oi.OrderId);
         }
+        //HasOne, WithMany and HasForeingnKey are Fluent API methods. 
     }
 }

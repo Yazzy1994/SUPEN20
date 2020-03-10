@@ -15,9 +15,9 @@ namespace SystemAPI.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IRespository<Order> _orderRespository;
+        private readonly IRepository<Order> _orderRespository;
 
-        public OrdersController(IRespository<Order> orderRespository, IMapper mapper)
+        public OrdersController(IRepository<Order> orderRespository, IMapper mapper)
         {
             _orderRespository = orderRespository;
             _mapper = mapper;
@@ -72,17 +72,17 @@ namespace SystemAPI.Controllers
         {
             try
             {
-                var validator = new SaveOrderValidator();
-                var orderEntity = _mapper.Map<OrderDto, Order>(orderDto);
-                var validationResult = await validator.ValidateAsync(orderEntity);
+                var validator = new SaveOrderValidator(); //Makes a instance of SaveOrderValidator
+                var orderEntity = _mapper.Map<OrderDto, Order>(orderDto); //Maps from OrderDto to OrderEntity
+                var validationResult = await validator.ValidateAsync(orderEntity); //Validates the orderentity 
 
 
-                if (!validationResult.IsValid)
+                if (!validationResult.IsValid) //If it's not valid it returns errors. 
                 {
                     return BadRequest(validationResult.Errors);
                 }
 
-                var orderFromRepo = _orderRespository.AddAsync(orderEntity);
+                var orderFromRepo = _orderRespository.AddAsync(orderEntity); //Adds the new order in the database
                 await _orderRespository.SaveChangesAsync();
 
                 return CreatedAtAction("GetOrders", new { id = orderDto.OrderId }); //CreatedAtAction method returns HTTP 201 status code, if successful.

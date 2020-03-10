@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SystemAPI.Services
 {
-    public interface IRespository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class //This Interface can be applied to all respositories. 
     {
         //Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         Task AddAsync(TEntity entity);

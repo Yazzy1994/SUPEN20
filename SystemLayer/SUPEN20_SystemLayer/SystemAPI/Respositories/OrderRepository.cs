@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace SystemAPI.Services
 {
-    public class OrderRespository : IRespository<Order>
+    public class OrderRepository : IRepository<Order>
     {
         private readonly SUPEN20DbContext _context;
 
-        public OrderRespository(SUPEN20DbContext context)
+        public OrderRepository(SUPEN20DbContext context)
         {
             _context = context;
         }
@@ -31,7 +31,7 @@ namespace SystemAPI.Services
            
         }
 
-        public Task Delete(Order order)
+        public Task Delete(Order order) 
         {
             _context.Set<Order>().Remove(order);
             return _context.SaveChangesAsync();
@@ -63,7 +63,7 @@ namespace SystemAPI.Services
 
         public async ValueTask<Order> GetByIdAsync(Guid orderId)
         {
-            return await _context.Orders
+            return await _context.Orders //Gets orderId and it includes OrderItems with Products 
                 .Include(o => o.OrderItems)
                 .ThenInclude(p => p.Product)
                 .Where(o => o.OrderId == orderId)

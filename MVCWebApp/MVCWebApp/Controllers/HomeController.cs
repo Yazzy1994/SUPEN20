@@ -28,7 +28,7 @@ namespace MVCWebApp.Controllers
         }
 
       
-        public IActionResult Index()
+        public IActionResult Index() //Gets all products from the database 
         {
             HttpResponseMessage response = client.GetAsync("/api/products").Result;
             List<ProductModel> data = response.Content.ReadAsAsync<List<ProductModel>>().Result;

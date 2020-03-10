@@ -26,7 +26,7 @@ namespace MVCWebApp.Controllers
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        // Tillfälligt: Hämtar och lägger till alla produkter från databasen i kundvagnen
+        
         public IActionResult Cart()
         {
             CurrentCart.Total = CartTotal(CurrentCart);
@@ -42,18 +42,18 @@ namespace MVCWebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult CreateOrder()
+        public IActionResult CreateOrder() 
         {
-            var orderId = Guid.NewGuid();
+            var orderId = Guid.NewGuid(); //Creates a new and unique orderId
 
             List<OrderItemModel> orderItems = new List<OrderItemModel>();
-            foreach (var product in CurrentCart.Products)
+            foreach (var product in CurrentCart.Products) // Loops throu every products that exist in the Cart. 
             {
-                var items = new OrderItemModel()
+                var items = new OrderItemModel() // Add the product/products in OrderItem
                 {
-                    OrderItemId = Guid.NewGuid(),
+                    OrderItemId = Guid.NewGuid(), //Creates a new and unique orderItemId for every product in the OrderItemList 
                     ProductId = product.ProductId,
-                    ProductDescription = product.Description,
+                    ProductDescription = product.Description, //You add the product characteristics you want to show in the DTO. Like in this case - Img doest follow to the SystemLayer DTO
                     ProductPrice = product.Price,
                     ProductTitle = product.Title,
                     Quantity = product.Quantity,
@@ -62,7 +62,7 @@ namespace MVCWebApp.Controllers
                 orderItems.Add(items);
             }
 
-            var order = new OrderModel()
+            var order = new OrderModel() //Creates a new Order with OrderItems and the user that made the order
             {
                 OrderId = orderId,
                 OrderNumber = 123,
@@ -73,7 +73,7 @@ namespace MVCWebApp.Controllers
                 Total = CurrentCart.Total
             };
 
-            HttpResponseMessage response = client.PostAsJsonAsync("/api/orders/", order).Result;
+            HttpResponseMessage response = client.PostAsJsonAsync("/api/orders/", order).Result;  //Post the order to the database. 
             response.Content.ReadAsStringAsync();
 
             return RedirectToAction("Cart");
@@ -82,12 +82,12 @@ namespace MVCWebApp.Controllers
         // Lägger till en produkt i kundvagnen
         public IActionResult AddProductToCart(ProductModel product)
         {
-            var id = product.ProductId; //Ifall samma productId läggs till i kundvagn så kör foreach för att loopa igenom alla produkter somm läggs i kundvagnen. Om productId redan finns läggs till så ökas det kvantitet istället för att lägga till samma produkt flera gånger.
-
+            var id = product.ProductId; 
+            
             foreach (var p in CurrentCart.Products)
             {
                 if (p.ProductId == id)
-                {
+                {  //If same productId already exist in the Cart, then the loop start to compare the Id's. If the product already exist in the Cart. It will increse the quantity
                     p.Quantity += 1;
                     return RedirectToAction("Index", "Home");
                 }

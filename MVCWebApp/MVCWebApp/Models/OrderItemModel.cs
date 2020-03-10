@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MVCWebApp.Models
 {
-    public class OrderItemModel
+    public class OrderItemModel //As the same structure as the OrderItemDto in the SystenLayer. 
     {
-        public Guid OrderItemId { get; set; }
+        public Guid OrderItemId { get; set; }  
 
         public Guid ProductId { get; set; }
         public Guid OrderId { get; set; }

@@ -37,7 +37,7 @@ namespace SystemAPI
         
          
             services.AddTransient<DataSeeder>();
-            services.AddScoped(typeof(IRespository<Order>), typeof(OrderRespository)); //Able to use the respository interface, We need to configure dependency injection.This Scoped service takes our interface and our implementation with DbContext
+            services.AddScoped(typeof(IRepository<Order>), typeof(OrderRepository)); //Able to use the respository interface, We need to configure dependency injection.This Scoped service takes our interface and our implementation with DbContext
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
