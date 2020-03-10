@@ -30,7 +30,7 @@ namespace MVCWebApp.Controllers
       
         public IActionResult Index()
         {
-            HttpResponseMessage response = client.GetAsync("/api/product").Result;
+            HttpResponseMessage response = client.GetAsync("/api/products").Result;
             List<ProductModel> data = response.Content.ReadAsAsync<List<ProductModel>>().Result;
             return View(data);
         }
