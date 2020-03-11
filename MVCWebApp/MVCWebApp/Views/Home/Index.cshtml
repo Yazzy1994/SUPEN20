@@ -1,0 +1,31 @@
+﻿@model List<MVCWebApp.Models.ProductModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<script>
+
+</script>
+
+<div class="container-fluid p-5">
+    <div class="row d-flex justify-content-center">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 p-3">
+                <div class="border bg-white rounded p-1">
+                    <img src="~/Img/@(product.ImgId).png" class="img-fluid" alt="@product.Title" />
+                    <div class="card-body">
+                        <p class="text-center font-weight-normal"><small>@product.Title</small></p>
+                        <ul class="list-group text-center" style="list-style-type: none;">
+                            <li><small>Price: $@product.Price</small></li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <button onclick= "location.href='@Url.Action("AddProductToCart" , "Cart", product)'" id="buyButtom" class="btn btn-light btn-block" style="background-color: #ea9999; color: white;"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

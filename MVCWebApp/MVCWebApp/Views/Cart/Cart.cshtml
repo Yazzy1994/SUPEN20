@@ -1,0 +1,122 @@
+﻿@model MVCWebApp.Models.CartModel
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "Cart";
+
+}
+
+
+@*http://placehold.it/100x100*@
+
+
+<!-- Product table start -->
+<div>
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:55%">Product</th>
+                <th style="width:15%">Price</th>
+                <th style="width:10%">Quantity</th>
+                <th style="width:5%"></th>
+                <th style="width:15%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- List of products in the cart -->
+            @foreach (var p in Model.Products)
+            {
+                <tr>
+                    <td data-th="Product">
+                        <div class="row">
+                            <div class="col-sm-3 hidden-xs" id="productImg"><img src="~/Img/@(p.ImgId).png" alt="..." class="img-fluid" /></div>
+                            <div class="col-sm-9">
+                                <h4 class="nomargin" id="productTitle">@p.Title</h4>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-th="Price">$@p.Price</td>
+                    <td data-th="Quantity">
+                        <div class="row">
+                            <div class="col-sm-4 pl-2">
+                                <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("UpdateProductQuantity", "Cart", new { product = p.ProductId, quantity = (p.Quantity + 1)})+ "'");">+</button>
+                            </div>
+                            <div class="col-sm-1 text-center">
+                                <label class="" id="quantity"> @p.Quantity</label>
+                            </div>
+                            <div class="col-sm-4 pl-0">
+                                <button class="btn btn-light btn-sm" onclick="@("window.location.href='" + @Url.Action("UpdateProductQuantity", "Cart", new { product = p.ProductId , quantity = (p.Quantity - 1)})+ "'");"
+                                         @{ if(@p.Quantity == 1) { 
+                                            @:disabled="disabled" 
+                                            } }>-</button>
+                            </div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <!-- Remove item button -->
+                    <td class="actions text-center" data-th="">
+                        <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#removeApproval"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+
+                <!-- Modal Approve Remove-->
+                <div class="modal fade" id="removeApproval" tabindex="-1" role="dialog" aria-labelledby="removeApprovalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Do you want to remove this product from the cart?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <button type="button" class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("RemoveItemFromCart", "Cart", new { product = p.ProductId })+ "'");">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Modal Approve Remove -->
+            }
+
+        </tbody>
+        <!-- Navigation buttons -->
+            <tfoot>
+                <tr>
+                    <td><a href="@Url.Action("Index", "Home")" class="btn btn-light"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                    <td class="hidden-xs text-center" id="totalPrice"><strong>Total $@Model.Total</strong></td>
+                    <td colspan="2" class="hidden-xs"></td>
+                    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#loadingModal" id="checkout" onclick="@("window.location.href='" + @Url.Action("CreateOrder", "Cart")+ "'");">Checkout <i class="fa fa-angle-right"></i></button></td>
+                </tr>
+            </tfoot>
+     </table>
+</div>
+
+
+<!-- Checks if the user is logged in before showing the processing screen -->
+@{ if (@User.Identity.IsAuthenticated)
+    {
+        <!-- Modal Loading Screen -->
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center"
+                         style="/*background-image: url(https://www.pngitem.com/pimgs/m/347-3473177_transparent-public-domain-clipart-public-domain-unicorn-free.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;*/
+        opacity: 0.2
+        ">
+                        <div class="spinner-border text-center m-5" style="width: 10rem; height: 10rem;" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+
+                    </div>
+                    <p class="text-center">Processing order...</p>
+                </div>
+            </div>
+        </div>
+    }
+}

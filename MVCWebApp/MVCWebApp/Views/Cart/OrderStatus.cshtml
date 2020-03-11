@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "OrderStatus";
+}
+
+<!-- Behövs för att glyphicons ska fungera -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+@{
+    // Får in ett värde på om orderstatus är approved eller denied och ändrar outputen beroende på svaret.
+    var orderstatus = ViewBag.Message;
+    if (orderstatus)
+    {
+        <!-- Order Approved -->
+        <div class="container-fluid m-5" style="height: 100%">
+            <div class="row d-flex justify-content-center">
+                <p class="m-5" style="height: 100%"><span class="glyphicon glyphicon-ok-circle text-success" style="font-size: 400px;"></span></p>
+            </div>
+            <div class="text-center">
+                <h1>Order confirmed</h1>
+                <p>An order confirmation will be sent to your email address shortly.</p>
+                <p>Expected delivery time: 4-5 business days.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Order Denied -->
+        <div class="container-fluid m-5" style="height: 100%">
+            <div class="row d-flex justify-content-center">
+                <p class="m-5" style="height: 100%"><span class="glyphicon glyphicon-remove-circle text-danger" style="font-size: 400px;"></span></p>
+            </div>
+            <div class="text-center">
+                <h1>Order failed</h1>
+                <p>An error occured while trying to process your order.</p>
+                <p>Error: Not enough credit.</p>
+            </div>
+        </div>
+
+
+    }
+}
+
+
