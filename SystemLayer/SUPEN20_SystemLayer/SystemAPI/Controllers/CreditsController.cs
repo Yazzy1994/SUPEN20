@@ -34,8 +34,13 @@ namespace SystemAPI.Controllers
         {
             try
             {
+                // Gets all the rows in the database and saves it into a list
                 var creditsList = await _context.Credits.ToListAsync();
+
+                // Maps the list of entities to a list of dto's to send back
                 var creditsDtoList = _mapper.Map<IEnumerable<CreditDTO>>(creditsList);
+
+                // Returns OK together with the list of Dto's
                 return Ok(creditsDtoList);
 
             }
@@ -53,14 +58,20 @@ namespace SystemAPI.Controllers
         {
             try
             {
+                // Saves the credit with the customerId into a variable
                 var credit = await _context.Credits.FindAsync(customerid);
+
+                // Makes sure the variable is not null, that the previous line returned a result
                 if (credit == null)
                 {
                     return NotFound();
                 }
                 else
                 {
+                    // Maps from entity to dto
                     var creditDto = _mapper.Map<CreditDTO>(credit);
+                    
+                    // Returns dto
                     return Ok(creditDto);
                 }
             }
@@ -86,13 +97,17 @@ namespace SystemAPI.Controllers
 
                 // Mappes the creditDto into an entity
                 var credit = _mapper.Map<Credit>(creditDto);
+
+                // Adds the current date as LastModified
                 credit.LastModified = DateTime.Now;
 
                 // "Modified: the entity is being tracked by the context and exists in the database, and some or all of its property values have been modified." Source: https://docs.microsoft.com/en-us/ef/ef6/saving/change-tracking/entity-state
                 _context.Entry(credit).State = EntityState.Modified;
 
+                // Saves the changes to the database
                 await _context.SaveChangesAsync();
 
+                // Returns success and the same dto that was sent as a parameter
                 return Ok(creditDto);
             }
             catch (DbUpdateConcurrencyException)
@@ -122,8 +137,12 @@ namespace SystemAPI.Controllers
                 // Maps the incomming DTO-object to an Entity-object.
                 var credit = _mapper.Map<Credit>(creditDto);
 
+                // Adds the entity to the database
                 _context.Credits.Add(credit);
+
+                // Saves the changes to the database
                 await _context.SaveChangesAsync();
+
                 // Sends back result in the shape of an DTO.
                 return CreatedAtAction("GetCredit", new { id = credit.CustomerId }, _mapper.Map<CreditDTO>(credit));
             }
@@ -140,15 +159,22 @@ namespace SystemAPI.Controllers
         {
             try
             {
+                // Finds the credit in the database and saves it into a variable
                 var credit = await _context.Credits.FindAsync(id);
+
+                // Makes sure the previous line returned a result
                 if (credit == null)
                 {
                     return NotFound();
                 }
                 
+                // Removes the item from the database
                 _context.Credits.Remove(credit);
+
+                // Saves changes to the database
                 await _context.SaveChangesAsync();
                 
+                // Returns success
                 return Ok();
             }
             catch (Exception ex)
@@ -158,6 +184,7 @@ namespace SystemAPI.Controllers
             }
         }
 
+        // A method that checks if the specific item exist in the database by looking for the id sent as a parameter
         private bool CreditExist(Guid id)
         {
             return _context.Credits.Any(e => e.CreditId == id);

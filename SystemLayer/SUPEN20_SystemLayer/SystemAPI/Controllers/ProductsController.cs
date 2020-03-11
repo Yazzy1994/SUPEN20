@@ -26,6 +26,7 @@ namespace SystemAPI.Controllers
         {
             try
             {
+                // Returns all the products from the database
                 return await _context.Products.ToListAsync();
             }
             catch (Exception ex)
@@ -41,11 +42,16 @@ namespace SystemAPI.Controllers
         {
             try
             {
+                // Saves the product that matches the id into a variable
                 var product = await _context.Products.FindAsync(id);
+
+                // Makes sure the variable is not null
                 if (product == null)
                 {
                     return NotFound();
                 }
+
+                // Returns the product
                 return product;
             }
             catch (Exception ex)
@@ -61,13 +67,17 @@ namespace SystemAPI.Controllers
         {
             try
             {
+                // Check if the Id entered is the same Id as the object that has been sent
                 if (!(id.ToString().Equals(product.ProductId.ToString())))
                 {
                     return BadRequest();
                 }
+
+                // "Modified: the entity is being tracked by the context and exists in the database, and some or all of its property values have been modified." Source: https://docs.microsoft.com/en-us/ef/ef6/saving/change-tracking/entity-state
                 _context.Entry(product).State = EntityState.Modified;
                 try
                 {
+                    // Saves changes to the database
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -97,8 +107,13 @@ namespace SystemAPI.Controllers
         {
             try
             {
+                // Adds the new product to the database
                 _context.Products.Add(product);
+
+                // Saves changes to the database
                 await _context.SaveChangesAsync();
+
+                // Returns the object created
                 return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
             }
             catch (Exception ex)
@@ -114,13 +129,22 @@ namespace SystemAPI.Controllers
         {
             try
             {
+                // Looks for the specified product and saves it into a variable
                 var product = await _context.Products.FindAsync(id);
+
+                // Makes sure tha variable is not null
                 if (product == null)
                 {
                     return NotFound();
                 }
+
+                // Removed the product from the database 
                 _context.Products.Remove(product);
+
+                // Save changes to the database
                 await _context.SaveChangesAsync();
+
+                // Returns success
                 return Ok();
             }
             catch (Exception ex)
@@ -130,6 +154,7 @@ namespace SystemAPI.Controllers
             }
         }
 
+        // A method that checks if the specific item exist in the database by looking for the id sent as a parameter
         private bool ProductsExist(Guid id)
         {
             return _context.Products.Any(e => e.ProductId == id);

@@ -21,12 +21,11 @@ namespace MVCWebApp.Controllers
         public CartController(IMapper mapper)
         {
             _mapper = mapper;
-            client.BaseAddress = new Uri("http://localhost:51044");
+            client.BaseAddress = new Uri("https://localhost:44305/");
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        // Tillfälligt: Hämtar och lägger till alla produkter från databasen i kundvagnen
         public IActionResult Cart()
         {
             CurrentCart.Total = CartTotal(CurrentCart);
