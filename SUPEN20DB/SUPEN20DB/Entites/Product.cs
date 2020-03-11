@@ -7,9 +7,6 @@ namespace SUPEN20DB.Entites
 {
     public class Product
     {
-
-    
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ProductId { get; set; }

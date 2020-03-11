@@ -9,7 +9,7 @@
 @*http://placehold.it/100x100*@
 
 
-<!-- Products table start -->
+<!-- Product table start -->
 <div>
     <table id="cart" class="table table-hover table-condensed">
         <thead>
@@ -52,7 +52,7 @@
                         </div>
                     </td>
                     <td></td>
-                    <!-- Ska också ta bort produkten ur listan.. -->
+                    <!-- Remove item button -->
                     <td class="actions text-center" data-th="">
                         <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#removeApproval"><i class="fa fa-trash-o"></i></button>
                     </td>
@@ -95,7 +95,7 @@
 </div>
 
 
-
+<!-- Checks if the user is logged in before showing the processing screen -->
 @{ if (@User.Identity.IsAuthenticated)
     {
         <!-- Modal Loading Screen -->
@@ -119,5 +119,4 @@
             </div>
         </div>
     }
-
 }
